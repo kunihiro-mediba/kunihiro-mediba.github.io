@@ -3,6 +3,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="initial-scale=1,width=device-width" />
     <title>fixed button</title>
+    <style>
+      .button {
+        display: block;
+        width: 120px;
+        height: 32px;
+        border: 1px solid #000;
+        background-color: #eee;
+        color: #000;
+        text-align: center;
+      }
+    </style>
+    <script>
+//<![CDATA[
+function scrollToTop(){
+  document.getElementById("header").scrollIntoView({ behavior: "smooth" });
+}
+//]]>
+    </script>
   </head>
   <body>
     <header id="header">
@@ -12,7 +30,7 @@
     <footer>
       <div>footer</div>
     </footer>
-    <button type="button" style="position:fixed;bottom:4px;left:0;width:120px;height:32px" onclick="alert('button clicked')">click me</button>
-    <a href="#header" style="position:fixed;bottom:4px;left:160px;display:block;width:120px;height:32px" onclick="alert('link clicked')">click me</button>
+    <button class="button" type="button" style="position:fixed;bottom:4px;left:0" onclick="scrollToTop()">button</button>
+    <a class="button" href="#header" style="position:fixed;bottom:4px;left:160px" onclick="scrollToTop()">link</button>
   </body>
 </html>
