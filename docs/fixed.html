@@ -7,8 +7,10 @@
       .content {
         height: 256px;
       }
-      .button {
-        display: block;
+      .fixed-button {
+        position: fixed;
+        display: flex;
+        align-items: center;
         width: 120px;
         height: 32px;
         border: 1px solid #000;
@@ -19,8 +21,8 @@
     </style>
     <script>
 //<![CDATA[
-function scrollToTop(){
-  document.getElementById("header").scrollIntoView({ behavior: "smooth" });
+function scrollTo(id){
+  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
 }
 //]]>
     </script>
@@ -30,18 +32,24 @@ function scrollToTop(){
       <h1>fixed button</h2>
     </header>
     <main>
-      <div class="content">content1</div>
-      <div class="content">content2</div>
-      <div class="content">content3</div>
-      <div class="content">content4</div>
-      <div class="content">content5</div>
-      <div class="content">content6</div>
-      <div class="content">content7</div>
+      <div class="content" style="background-color:#def">content1</div>
+      <div class="content" style="background-color:#efd">content2</div>
+      <div class="content" style="background-color:#fde">content3</div>
+      <div class="content" style="background-color:#edf">content4</div>
+      <div class="content" style="background-color:#dfe">content5</div>
+      <div class="content" style="background-color:#fed">content6</div>
+      <div class="content" style="background-color:#fef">content7</div>
+      <div class="content" style="background-color:#eff">content8</div>
+      <div class="content" style="background-color:#ffe">content9</div>
     </main>
     <footer>
       <div>footer</div>
     </footer>
-    <button class="button" type="button" style="position:fixed;bottom:4px;left:0" onclick="scrollToTop()">button</button>
-    <a class="button" style="position:fixed;bottom:4px;left:160px" onclick="scrollToTop()">link</button>
+    <nav>
+      <button class="fixed-button" type="button" style="bottom:64px;left:0" onclick="scrollTo('header')">to top button</button>
+      <a class="fixed-button" style="bottom:32px;left:160px" onclick="scrollTo('header')">to top link</button>
+      <button class="fixed-button" type="button" style="bottom:32px;left:0" onclick="scrollTo('footer')">to bottom button</button>
+      <a class="fixed-button" style="bottom:64px;left:160px" onclick="scrollTo('footer')">to bottom link</button>
+    </nav>
   </body>
 </html>
