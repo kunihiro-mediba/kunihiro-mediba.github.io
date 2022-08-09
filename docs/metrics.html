@@ -1,1 +1,63 @@
-<html><head><meta charset="UTF-8"><meta name="viewport" content="initial-scale=1,width=device-width"><meta name="format-detection" content="telephone=no,email=no"><title>Metrics</title><style>dl{border-bottom:1px solid #ccc;display:flex}dd,dt{flex:0.5}dd{text-align:right}</style></head><body> <main id="container"> <script>addEventListener("load",(async()=>{function e(e,t){const n=document.createElement("dt");n.textContent=e;const i=document.createElement("dd");i.textContent=t;const o=document.createElement("dl");o.appendChild(n),o.appendChild(i),container.appendChild(o)}document.getElementById("container");e("innerWidth",`${window.innerWidth}`),e("innerHeight",`${window.innerHeight}`),e("outerWidth",`${window.outerWidth}`),e("outerHeight",`${window.outerHeight}`),e("devicePixelRatio",`${window.devicePixelRatio}`),e("navigator.userAgent",`${navigator.userAgent}`),e("navigator.appName",`${navigator.appName}`),e("navigator.appVersion",`${navigator.appVersion}`)}));</script> </main></body></html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="initial-scale=1,width=device-width" />
+        <meta name="format-detection" content="telephone=no,email=no" />
+        <title>Metrics</title>
+        <style>
+            dl {
+                border-bottom: 1px solid #ccc;
+            }
+            dt {
+                color: #36f;
+            }
+            dd {
+                text-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <main id="container">
+            <script>
+                addEventListener("load", async () => {
+                    const c = document.getElementById("container");
+                    function e(e, t) {
+                        const n = document.createElement("dt");
+                        n.textContent = e;
+                        const i = document.createElement("dd");
+                        i.textContent = t;
+                        const o = document.createElement("dl");
+                        o.appendChild(n), o.appendChild(i), c.appendChild(o);
+                    }
+                    e("innerWidth", `${window.innerWidth}`);
+                    e("innerHeight", `${window.innerHeight}`);
+                    e("outerWidth", `${window.outerWidth}`);
+                    e("outerHeight", `${window.outerHeight}`);
+                    e("devicePixelRatio", `${window.devicePixelRatio}`);
+                    e("navigator.userAgent", `${navigator.userAgent}`);
+                    e("navigator.appName", `${navigator.appName}`);
+                    e("navigator.appVersion", `${navigator.appVersion}`);
+                    e("navigator.userAgentData", JSON.stringify(navigator.userAgentData, null, 1));
+                    navigator?.userAgentData?.getHighEntropyValues
+                        ? navigator.userAgentData
+                              .getHighEntropyValues([
+                                  "architecture",
+                                  "bitness",
+                                  "model",
+                                  "platform",
+                                  "platformVersion",
+                                  "uaFullVersion",
+                                  "fullVersionList",
+                              ])
+                              .then((ua) => {
+                                  e("navigator.userAgentData.getHighEntropyValues", JSON.stringify(ua, null, 1));
+                              })
+                              .catch((err) => {
+                                  e("navigator.userAgentData.getHighEntropyValues", `failed ${err}`);
+                              })
+                        : e("navigator.userAgentData.getHighEntropyValues", "not support");
+                });
+            </script>
+        </main>
+    </body>
+</html>
