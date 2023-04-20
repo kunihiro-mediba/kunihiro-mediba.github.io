@@ -9,10 +9,18 @@
         <header>
             <h1>kunihiro-mediba.github.io</h1>
         </header>
-        <main>
+        <main id="container">
             <ul>
                 <li><a href="https://github.com/kunihiro-mediba/" target="_blank">https://github.com/kunihiro-mediba/</a></li>
             </ul>
         </main>
+        <script>
+            const container = document.getElementById("container");
+            if (container) {
+                const div = document.createElement("div");
+                div.textContent = "userAgent: " + navigator.userAgent;
+                container.appendChild(div);
+            }
+        </script>
     </body>
 </html>
