@@ -1,0 +1,17 @@
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="initial-scale=1,width=device-width" />
+        <title>Document</title>
+    </head>
+    <body>
+        <button id="cancel">cancel</button>
+        <script>
+            const cancel = document.getElementById("cancel");
+            cancel.addEventListener("click", () => {
+                window.close();
+                console.log("window.close()");
+            });
+        </script>
+    </body>
+</html>
