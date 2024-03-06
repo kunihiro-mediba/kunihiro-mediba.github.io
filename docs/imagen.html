@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+          input[type=number] {text-align:right;width:4em}
+          a{display:block;text-align:center;padding:8px;border:1px solid #9cf}
+        </style>
+    </head>
+    <body>
+        <form id="form">
+            <div>
+                <input name="width" type="number" value="300" /> x <input name="height" type="number" value="300" />
+            </div>
+          </div>
+          <div><button id="generate" type="submit">generate</button></div>
+        </form>
+        <div id="output"></div>
+        <script>
+//<![CDATA[
+
+function onLoad() {
+    const form = document.getElementById("form");
+    const output = document.getElementById("output");
+    if (!form || !output) {
+        return;
+    }
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const width = parseInt(formData.get("width"), 10);
+        const height = parseInt(formData.get("height"), 10);
+        console.log({ width, height });
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const cc = canvas.getContext("2d");
+        // background
+        cc.fillStyle = "#ffeedd";
+        cc.fillRect(0, 0, width, height);
+        // grid
+        cc.fillStyle = "#cccccc";
+        for (let i = 0; i < width; i += 10) {
+            cc.fillRect(i, 0, 1, height);
+        }
+        for (let i = 0; i < height; i += 10) {
+            cc.fillRect(0, i, width, 1);
+        }
+        cc.fillStyle = "#999999";
+        for (let i = 0; i < width; i += 100) {
+            cc.fillRect(i, 0, 1, height);
+        }
+        for (let i = 0; i < height; i += 100) {
+            cc.fillRect(0, i, width, 1);
+        }
+        // frame line
+        cc.strokeStyle = "#000000";
+        cc.strokeRect(0, 0, width, height);
+        // text
+        const text = `${width} x ${height}`;
+        cc.fillStyle = "#000000";
+        cc.font = "16px sans-serif";
+        cc.textAlign = "center";
+        cc.textBaseline = "middle";
+        cc.fillText(text, width / 2, height / 2, width);
+
+        // show image and download link
+        const img = document.createElement("img");
+        img.src = canvas.toDataURL("image/png");
+        img.width = width;
+        img.height = height;
+        const link = document.createElement("a");
+        link.href = img.src;
+        link.download = `${width}x${height}.png`;
+        link.textContent = "Download";
+        const assets = document.createElement("div");
+        assets.appendChild(img);
+        assets.appendChild(link);
+        if (output.firstChild) { // remove previous image
+            output.removeChild(output.firstChild);
+        }
+        output.appendChild(assets);
+        console.log("generated");
+    });
+}
+addEventListener("load", onLoad);
+
+//]]>
+        </script>
+    </body>
+</html>
