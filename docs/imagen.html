@@ -1,11 +1,10 @@
-<!DOCTYPE html>
 <html lang="ja">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Image generation tool</title>
         <style>
-          input[type=number] {text-align:right;width:4em}
+          input[type=number] {width:4em}
           a{display:block;text-align:center;padding:8px;border:1px solid #9cf}
         </style>
     </head>
@@ -19,7 +18,6 @@
         </form>
         <div id="output"></div>
         <script>
-//<![CDATA[
 
 function onLoad() {
     const form = document.getElementById("form");
@@ -38,7 +36,6 @@ function onLoad() {
         const canvas = document.createElement("canvas");
         canvas.width = width;
         canvas.height = height;
-
         const cc = canvas.getContext("2d");
         // background
         cc.fillStyle = "#ffeedd";
@@ -90,7 +87,6 @@ function onLoad() {
 }
 addEventListener("load", onLoad);
 
-//]]>
         </script>
     </body>
 </html>
