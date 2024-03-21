@@ -5,13 +5,36 @@
         <title>Image generation tool</title>
         <style>
           input[type=number] {width:4em}
+          input[type=text] {width:8em}
           a{display:block;text-align:center;padding:8px;border:1px solid #9cf}
         </style>
     </head>
     <body>
         <form id="form">
             <div>
-                <input name="width" type="number" value="300" /> x <input name="height" type="number" value="300" />
+                <label for="width">width</label>
+                <input id="width" name="width" type="number" value="300" />
+            </div>
+            <div>
+                <label for="height">height</label>
+                <input id="height" name="height" type="number" value="300" />
+            </div>
+            <div>
+                <label for="background">background</label>
+                <input id="background" name="background" type="text" value="#ffeedd" />
+            </div>
+            <div>
+                <label for="imageType">format</label>
+                <select id="imageType" name="imageType">
+                    <option value="image/png" selected="">PNG</option>
+                    <option value="image/jpeg">JPEG</option>
+                </select>
+            </div>
+            <div>
+                <label for="showGrid"><input id="showGrid" name="showGrid" type="checkbox" value="1" checked="" /> grid line</label>
+            </div>
+            <div>
+                <label for="showFrame"><input id="showFrame" name="showFrame" type="checkbox" value="1" checked="" /> frame line</label>
             </div>
           </div>
           <div><button id="generate" type="submit">generate</button></div>
@@ -31,33 +54,47 @@ function onLoad() {
         const formData = new FormData(form);
         const width = parseInt(formData.get("width"), 10);
         const height = parseInt(formData.get("height"), 10);
-        console.log({ width, height });
+        const background = formData.get("background");
+        const imageType = formData.get("imageType");
+        const fileExtension = {
+            "image/png": ".png",
+            "image/jpeg": ".jpg",
+        }[imageType];
+        const showGrid = !!formData.get("showGrid");
+        const showFrame = !!formData.get("showFrame");
+        console.log({ width, height, background, imageType, fileExtension, showGrid, showFrame });
 
         const canvas = document.createElement("canvas");
         canvas.width = width;
         canvas.height = height;
         const cc = canvas.getContext("2d");
+
         // background
-        cc.fillStyle = "#ffeedd";
+        cc.fillStyle = background;
         cc.fillRect(0, 0, width, height);
         // grid
-        cc.fillStyle = "#cccccc";
-        for (let i = 0; i < width; i += 10) {
-            cc.fillRect(i, 0, 1, height);
-        }
-        for (let i = 0; i < height; i += 10) {
-            cc.fillRect(0, i, width, 1);
-        }
-        cc.fillStyle = "#999999";
-        for (let i = 0; i < width; i += 100) {
-            cc.fillRect(i, 0, 1, height);
-        }
-        for (let i = 0; i < height; i += 100) {
-            cc.fillRect(0, i, width, 1);
+        if (showGrid) {
+            cc.fillStyle = "#cccccc";
+            for (let i = 0; i < width; i += 10) {
+                cc.fillRect(i, 0, 1, height);
+            }
+            for (let i = 0; i < height; i += 10) {
+                cc.fillRect(0, i, width, 1);
+            }
+            cc.fillStyle = "#999999";
+            for (let i = 0; i < width; i += 100) {
+                cc.fillRect(i, 0, 1, height);
+            }
+            for (let i = 0; i < height; i += 100) {
+                cc.fillRect(0, i, width, 1);
+            }
         }
         // frame line
-        cc.strokeStyle = "#000000";
-        cc.strokeRect(0, 0, width, height);
+        if (showFrame) {
+            cc.lineWidth = 1;
+            cc.strokeStyle = "#000000";
+            cc.strokeRect(0, 0, width, height);
+        }
         // text
         const text = `${width} x ${height}`;
         cc.fillStyle = "#000000";
@@ -68,12 +105,12 @@ function onLoad() {
 
         // show image and download link
         const img = document.createElement("img");
-        img.src = canvas.toDataURL("image/png");
+        img.src = canvas.toDataURL(imageType);
         img.width = width;
         img.height = height;
         const link = document.createElement("a");
         link.href = img.src;
-        link.download = `${width}x${height}.png`;
+        link.download = `${width}x${height}${fileExtension}`;
         link.textContent = "Download";
         const assets = document.createElement("div");
         assets.appendChild(img);
